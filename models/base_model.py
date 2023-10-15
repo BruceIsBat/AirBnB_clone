@@ -30,7 +30,7 @@ class BaseModel:
                 self.id = str(uuid.uuid4())
             if 'created_at' not in kwargs:
                 self.created_at = self.updated_at = datetime.now()
-            storage.new(self)
+            storage.new()
         else:
             self.created_at = datetime.now()
             self.updated_at = self.created_at
@@ -50,7 +50,7 @@ class BaseModel:
         updated_at with the current datetime
         """
 
-        storage.save()
+        storage.save(self)
         self.updated_at = datetime.now()
 
     def to_dict(self):
@@ -62,7 +62,7 @@ class BaseModel:
         """
 
         data = self.__dict__.copy()
-        data['__class__'] = type(self).__name__
+        data['__class'] = type(self).__name__
         data['created_at'] = self.created_at.isoformat()
         data['updated_at'] = self.created_at.isoformat()
 
