@@ -54,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             class_name = args[0]
             obj_id = args[1]
-            key = f"{class_name}.{obj_id}"
+            key = "{}.{}".format(class_name, obj_id)
 
             if key in all_objs:
                 print(all_objs[key])

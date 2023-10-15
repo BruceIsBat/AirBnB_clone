@@ -20,7 +20,7 @@ class FileStorage:
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id
         """
-        keys = f"{type(obj).__name__}.{obj.id}"
+        keys = "{}.{}".format(type(obj).__name__, obj.id)
         self.__objects[keys] = obj
 
     def save(self):

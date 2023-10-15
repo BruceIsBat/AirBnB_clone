@@ -43,14 +43,14 @@ class BaseModel:
             [BaseModel] ({self.id}) {self.__dict__}
         """
 
-        return f"[BaseModel] ({self.id}) {self.__dict__} "
+        return "[BaseModel] ({}) {} ".format(self.id, self.__dict__)
 
     def save(self):
         """This method updates the public instance attribute
         updated_at with the current datetime
         """
 
-        storage.save(self)
+        storage.save()
         self.updated_at = datetime.now()
 
     def to_dict(self):
