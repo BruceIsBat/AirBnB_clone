@@ -43,6 +43,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """Prints the string representation of an instance
         """
+        storage.reload()
         all_objs = storage.all()
         args = line.split()
         if len(args) == 0:
