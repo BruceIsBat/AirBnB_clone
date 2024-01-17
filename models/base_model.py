@@ -3,9 +3,12 @@
 """
 import uuid
 from datetime import datetime
-from models import storage
+from models import storag
+from models.engine.file_storage import FileStoragee
 
 
+storage = FileStorage()
+storage.reload()
 class BaseModel:
     """A class BaseModel that defines
     all common attributes/methods for other classes
@@ -30,7 +33,7 @@ class BaseModel:
                 self.id = str(uuid.uuid4())
             if 'created_at' not in kwargs:
                 self.created_at = self.updated_at = datetime.now()
-            storage.new()
+            storage.new(self)
         else:
             self.created_at = datetime.now()
             self.updated_at = self.created_at
@@ -43,14 +46,15 @@ class BaseModel:
             [BaseModel] ({self.id}) {self.__dict__}
         """
 
-        return "[BaseModel] ({}) {} ".format(self.id, self.__dict__)
+        return f"[BaseModel] ({self.id}) {self}".format(self.id, self.__dict__)
 
     def save(self):
         """This method updates the public instance attribute
         updated_at with the current datetime
         """
 
-        storage.save(self)
+        storage.new(self)
+        storage.save()
         self.updated_at = datetime.now()
 
     def to_dict(self):
@@ -62,8 +66,12 @@ class BaseModel:
         """
 
         data = self.__dict__.copy()
-        data['__class'] = type(self).__name__
+        data['__class__'] = type(self).__name__
         data['created_at'] = self.created_at.isoformat()
         data['updated_at'] = self.created_at.isoformat()
 
         return data
+
+
+if __name__ == "__main__":
+    BaseModel()
