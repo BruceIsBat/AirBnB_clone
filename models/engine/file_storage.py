@@ -38,15 +38,19 @@ class FileStorage:
             json.dump(serialized_data, file)
 
     def reload(self):
-        """deserializes the JSON file to __objects
-        """
+        """Deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as file:
-                data = json.load(file)
-            for key, values in data.items():
-                self.__objects[key] = values
-        except FileNotFoundError:
-            pass
+                data = file.read()
+                if data:
+                    data = json.loads(data)
+                    for key, values in data.items():
+                        if '__class' in values:
+                            class_name = values.pop('__class')
+                            obj = globals()[class_name](**values)
+                            self.__objects[key] = obj
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Error loading JSON file: {e}")
 
 
 if __name__ == "__main__":

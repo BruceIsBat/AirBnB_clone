@@ -28,15 +28,15 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel, saves it, and prints the ID.
         """
         class_name = line.strip()
-
+        
         if not class_name:
             print("** class name missing **")
         else:
             known_classes = {'BaseModel': BaseModel}
             if class_name in known_classes:
                 new_instance = known_classes[class_name]()
-                new_instance.save()
                 print(new_instance.id)
+                new_instance.save()
             else:
                 print("** class doesn't exist **")
 
@@ -45,6 +45,7 @@ class HBNBCommand(cmd.Cmd):
         """
         storage.reload()
         all_objs = storage.all()
+        # print(all_objs)
         args = line.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -55,10 +56,10 @@ class HBNBCommand(cmd.Cmd):
         else:
             class_name = args[0]
             obj_id = args[1]
-            key = "{}.{}".format(class_name, obj_id)
+            key = f"{class_name}.{obj_id}"
 
             if key in all_objs:
-                print(all_objs[key])
+                print(class_name())
             else:
                 print("** no instance found **")
 

@@ -3,8 +3,8 @@
 """
 import uuid
 from datetime import datetime
-from models import storag
-from models.engine.file_storage import FileStoragee
+from models import storage
+from models.engine.file_storage import FileStorage
 
 
 storage = FileStorage()
