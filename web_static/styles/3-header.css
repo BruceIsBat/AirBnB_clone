@@ -1,0 +1,11 @@
+header, footer {
+    width: 100%;
+}
+
+header {
+    height: 70px;
+    border-bottom: 1px solid #CCCCCC;
+    color: white;
+    display: flex;
+    align-items: center;
+}
